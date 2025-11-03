@@ -163,12 +163,4 @@ enum ScheduleStatus {
 }
 
 
-erDiagram
-    USER ||--o{ CONTACT : owns
-    USER ||--o{ MESSAGE : sends
-    USER ||--o{ NOTE : creates
-    USER ||--o{ SCHEDULE : manages
-    CONTACT ||--o{ MESSAGE : contains
-    CONTACT ||--o{ NOTE : annotated
-    CONTACT ||--o{ SCHEDULE : linked
 
