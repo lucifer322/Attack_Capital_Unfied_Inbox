@@ -48,4 +48,127 @@ Users can:
 ---
 
 ## 🏗️ Folder Structure
+📦 unified-inbox/
+├── app/
+│ ├── api/
+│ │ ├── auth/[...nextauth]/route.ts
+│ │ ├── contacts/route.ts
+│ │ ├── messages/route.ts
+│ │ ├── notes/route.ts
+│ │ ├── schedules/route.ts
+│ │ └── twilio/
+│ │ ├── send/route.ts
+│ │ └── webhook/route.ts
+│ ├── dashboard/page.tsx
+│ ├── login/page.tsx
+│ └── signup/page.tsx
+├── lib/
+│ ├── prisma.ts
+│ └── safeFetch.ts
+├── prisma/
+│ └── schema.prisma
+├── components/
+│ ├── ContactList.tsx
+│ ├── MessageThread.tsx
+│ ├── AddNoteForm.tsx
+│ ├── AddScheduleForm.tsx
+│ └── ContactProfileModal.tsx
+├── .env
+└── README.md
+
+
+---
+
+## 🗄️ Database Schema
+
+### Prisma Models
+```prisma
+model User {
+  id        String     @id @default(cuid())
+  name      String?
+  email     String     @unique
+  password  String?
+  role      Role       @default(VIEWER)
+  contacts  Contact[]
+  messages  Message[]
+  notes     Note[]
+  schedules Schedule[]
+  createdAt DateTime   @default(now())
+}
+
+model Contact {
+  id        String     @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  messages  Message[]
+  notes     Note[]
+  schedules Schedule[]
+  createdAt DateTime   @default(now())
+}
+
+model Message {
+  id         String    @id @default(cuid())
+  subject    String
+  body       String
+  direction  String    // "incoming" | "outgoing"
+  userId     String
+  contactId  String
+  user       User      @relation(fields: [userId], references: [id])
+  contact    Contact   @relation(fields: [contactId], references: [id])
+  createdAt  DateTime  @default(now())
+}
+
+model Note {
+  id         String          @id @default(cuid())
+  title      String
+  content    String
+  visibility NoteVisibility  @default(PRIVATE)
+  userId     String
+  contactId  String?
+  user       User            @relation(fields: [userId], references: [id])
+  contact    Contact?        @relation(fields: [contactId], references: [id])
+  createdAt  DateTime        @default(now())
+}
+
+model Schedule {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  status      ScheduleStatus  @default(SCHEDULED)
+  userId      String
+  contactId   String?
+  user        User            @relation(fields: [userId], references: [id])
+  contact     Contact?        @relation(fields: [contactId], references: [id])
+  createdAt   DateTime        @default(now())
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+}
+
+enum NoteVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+
+erDiagram
+    USER ||--o{ CONTACT : owns
+    USER ||--o{ MESSAGE : sends
+    USER ||--o{ NOTE : creates
+    USER ||--o{ SCHEDULE : manages
+    CONTACT ||--o{ MESSAGE : contains
+    CONTACT ||--o{ NOTE : annotated
+    CONTACT ||--o{ SCHEDULE : linked
 
