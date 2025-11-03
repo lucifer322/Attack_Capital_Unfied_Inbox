@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  VIEWER
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String?
+  email     String     @unique
+  password  String?
+  role      Role       @default(VIEWER)
+
+  // Relationships
+  contacts  Contact[]
+  messages  Message[]
+  notes     Note[]
+  schedules Schedule[]
+  twilio    TwilioAccount[] 
+  createdAt DateTime   @default(now())
+}
+
+model Contact {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String    
+
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+
+  messages  Message[]
+  schedules Schedule[]
+
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, phone])
+}
+
+model TwilioAccount {
+  id            String   @id @default(cuid())
+  accountSid    String
+  authToken     String
+  phoneNumber   String   @unique
+  userId        String
+  channelType   String 
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model Message {
+  id         String    @id @default(cuid())
+  subject    String
+  body       String
+  
+  direction  String 
+  contactId  String
+  contact    Contact   @relation(fields: [contactId], references: [id])
+
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+
+  createdAt  DateTime  @default(now())
+}
+
+model Note {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+}
+
+model Schedule {
+  id         String    @id @default(cuid())
+  title      String
+  date       DateTime
+  description String
+  contactId  String
+  contact    Contact   @relation(fields: [contactId], references: [id])
+
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+
+  createdAt  DateTime  @default(now())
+}
