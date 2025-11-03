@@ -1,4 +1,4 @@
-# 📘 Unified Inbox App — API Reference
+# Unified Inbox App — API Reference
 
 This document provides a **complete reference** for the Unified Inbox App API built with **Next.js (App Router)**, **Prisma**, **Supabase**, **Twilio**, and **NextAuth**.
 
@@ -7,7 +7,7 @@ The app uses Twilio APIs for **sending and receiving messages** across SMS and W
 
 ---
 
-## ⚙️ Base URL
+## Base URL
 
 http://localhost:3000/api
 
@@ -16,7 +16,7 @@ When deployed, replace with your production domain (e.g., `https://yourdomain.co
 
 ---
 
-## 🔐 Authentication Overview
+## Authentication Overview
 
 - Authentication is managed using **NextAuth Credentials Provider**.  
 - Upon successful login, a secure session cookie is set.  
@@ -25,9 +25,9 @@ When deployed, replace with your production domain (e.g., `https://yourdomain.co
 
 ---
 
-# 🧩 Endpoints
+# Endpoints
 
-## 1️⃣ Auth API — `/api/auth/[...nextauth]`
+##  Auth API — `/api/auth/[...nextauth]`
 
 ### POST `/api/auth/callback/credentials`
 
@@ -64,7 +64,7 @@ Error Response
 Database Relations:
 Reads and validates user record in User table.
 
-2️⃣ Contacts API — /api/contacts
+ Contacts API — /api/contacts
 GET /api/contacts
 
 Purpose:
