@@ -52,7 +52,7 @@ Response Example (200 OK):
   }
 }
 
-Error Response
+**Error Response**
 
 | Code | Message             | Description                  |
 | ---- | ------------------- | ---------------------------- |
@@ -61,13 +61,13 @@ Error Response
 | 404  | User not found      | No matching user in database |
 
 
-Database Relations:
+**Database Relations:**
 Reads and validates user record in User table.
 
  Contacts API — /api/contacts
 GET /api/contacts
 
-Purpose:
+**Purpose:**
 Fetch all contacts created by the authenticated user.
 
 Response Example (200 OK):
