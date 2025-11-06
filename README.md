@@ -43,41 +43,9 @@ Users can:
 | Database | **PostgreSQL (via Supabase)** |
 | ORM | **Prisma** |
 | Messaging | **Twilio API (SMS + WhatsApp Sandbox)** |
-| Hosting | Vercel (Frontend) / Supabase (DB) |
-
----
-
-## 🏗️ Folder Structure
-📦 unified-inbox/
-├── app/
-│ ├── api/
-│ │ ├── auth/[...nextauth]/route.ts
-│ │ ├── contacts/route.ts
-│ │ ├── messages/route.ts
-│ │ ├── notes/route.ts
-│ │ ├── schedules/route.ts
-│ │ └── twilio/
-│ │ ├── send/route.ts
-│ │ └── webhook/route.ts
-│ ├── dashboard/page.tsx
-│ ├── login/page.tsx
-│ └── signup/page.tsx
-├── lib/
-│ ├── prisma.ts
-│ └── safeFetch.ts
-├── prisma/
-│ └── schema.prisma
-├── components/
-│ ├── ContactList.tsx
-│ ├── MessageThread.tsx
-│ ├── AddNoteForm.tsx
-│ ├── AddScheduleForm.tsx
-│ └── ContactProfileModal.tsx
-├── .env
-└── README.md
+Hosting | Vercel (Frontend) / Supabase (DB) |
 
 
----
 
 ## 🗄️ Database Schema
 
